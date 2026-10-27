@@ -119,7 +119,7 @@ jobs:
 
     - name: Create PR from stable to master
       env:
-        GH_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         if [ -z "$(gh pr list --repo "$GITHUB_REPOSITORY" --head stable --base master --state open --json number --jq '.[].number')" ]; then
           if [ "$DRY_RUN" = "true" ]; then
@@ -128,7 +128,7 @@ jobs:
             gh pr create --repo "$GITHUB_REPOSITORY" --base master --head stable --title "Update changelog" --body "Sync from release to master."
           fi
         else
-          echo "Merge from stable to master PR already exist, skipping."
+          echo "Merge from stable to master PR already exists, skipping."
         fi
 
     - name: Build Packaging
